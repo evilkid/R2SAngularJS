@@ -1,5 +1,4 @@
-(function ()
-{
+(function () {
     'use strict';
 
     /**
@@ -7,7 +6,6 @@
      */
     angular
         .module('fuse', [
-
             // Core
             'app.core',
 
@@ -19,7 +17,10 @@
 
             // Quick Panel
             'app.quick-panel',
-
+            //auth service
+            'app.authService',
+            //login
+            'app.login',
             // Sample
             'app.sample'
         ]);

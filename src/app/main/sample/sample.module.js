@@ -35,19 +35,19 @@
 
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {
-            title : 'SAMPLE',
+            title : 'SAMPLEA',
             group : true,
             weight: 1
         });
 
         msNavigationServiceProvider.saveItem('fuse.sample', {
-            title    : 'Sample',
+            title    : 'Sampleee',
             icon     : 'icon-tile-four',
             state    : 'app.sample',
             /*stateParams: {
                 'param1': 'page'
              },*/
-            translate: 'SAMPLE.SAMPLE_NAV',
+            translate: 'SAMPLE.TEST',
             weight   : 1
         });
     }
