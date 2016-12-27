@@ -9,7 +9,7 @@
   function runBlock($rootScope, $timeout, $state, $cookies) {
     // Activate loading indicator
     var stateChangeStartEvent = $rootScope.$on('$stateChangeStart', function (event, toState) {
-
+console.log("changing");
       if (toState.name !== 'app.login' && typeof $cookies.get("access_token") === 'undefined') {
         console.log(event.preventDefault());
         $state.go('app.login');
@@ -19,6 +19,7 @@
 
     // De-activate loading indicator
     var stateChangeSuccessEvent = $rootScope.$on('$stateChangeSuccess', function () {
+      console.log("success");
       $timeout(function () {
         $rootScope.loadingProgress = false;
       });

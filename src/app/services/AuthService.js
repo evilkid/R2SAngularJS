@@ -4,24 +4,77 @@
         .service('auth', AuthService);
 
     /** @ngInject */
-    function AuthService($window, $http, $cookies, API) {
+    function AuthService($window, $http, $cookies, User /*, API*/) {
+        var API = "http://localhost:8080/tn.esprit.R2S-web/resources/api";
+        var self = this;
 
-        this.urlBase64Decode = urlBase64Decode;
-        this.decodeToken = decodeToken;
-        this.getTokenExpirationDate = getTokenExpirationDate;
-        this.isTokenExpired = isTokenExpired;
-        this.login = login;
-        this.logout = logout;
-        this.isAuthorized = isAuthorized;
-        this.currentUser = currentUser;
+        self.urlBase64Decode = urlBase64Decode;
+        self.decodeToken = decodeToken;
+        self.getTokenExpirationDate = getTokenExpirationDate;
+        self.isTokenExpired = isTokenExpired;
+        self.login = login;
+        self.logout = logout;
+        self.isAuthorized = isAuthorized;
+        self.refresh = refresh;
+        self.getCurrentUser = getCurrentUser;
+        self.role = getRole();
+
+        self.currentUser = null;
         ///////
 
-        function currentUser() {
+        function getRole() {
             if (isAuthorized()) {
                 var token = $cookies.get("access_token");
-                return decodeToken(token);
+                return decodeToken(token).role;
             }
             return null;
+        }
+
+
+        function getCurrentUser(callback) {
+
+            if (isAuthorized()) {
+
+                if (self.currentUser && self.currentUser.cin) {
+
+                    console.log("old", callback);
+                    callback(self.currentUser);
+                } else {
+                    console.log("new", callback);
+                    var token = $cookies.get("access_token");
+                    var cin = decodeToken(token).cin;
+                    self.currentUser = User.get({cin: cin}).$promise.then(function (currentUser) {
+                        self.currentUser = currentUser;
+                        callback(currentUser);
+                    });
+                }
+
+
+                /**
+                 //if user already retrieved return it
+                 if (self.currentUser) {
+                    //callback(self.currentUser);
+                    return self.currentUser;
+                } else {
+                    //else go and fetch it
+                    var token = $cookies.get("access_token");
+                    var cin = decodeToken(token).cin;
+                    $http.get(API + '/users/' + cin, {withCredentials: true})
+                        .then(function (response) {
+                            self.currentUser = response.data;
+                            console.log("first promise", response.data);
+                            callback(self.currentUser);
+                        });
+                }*/
+            }
+        }
+
+        function refresh() {
+            if (isAuthorized()) {
+                var token = $cookies.get("access_token");
+                var cin = decodeToken(token).cin;
+
+            }
         }
 
         function isAuthorized() {
@@ -35,7 +88,11 @@
         }
 
         function login(username, password) {
-            return $http.get(API + '/login/' + username + "/" + password, {withCredentials: true});
+            return $http.get(API + '/login/' + username + "/" + password, {withCredentials: true})
+                .then(function (response) {
+                    self.currentUser = response.data;
+                    return response;
+                });
         }
 
         function logout() {

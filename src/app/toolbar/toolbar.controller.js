@@ -14,7 +14,11 @@
             search: ''
         };
 
-        vm.fullName = auth.currentUser().firstname + " " + auth.currentUser().lastname;
+
+        auth.getCurrentUser(function (currentUser) {
+            vm.fullName = currentUser.firstname + " " + currentUser.lastname;
+        });
+
 
         vm.bodyEl = angular.element('body');
         vm.userStatusOptions = [

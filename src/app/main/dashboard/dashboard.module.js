@@ -6,18 +6,24 @@
         .config(config);
 
     /** @ngInject */
-    function config($stateProvider, msNavigationServiceProvider) {
+    function config($stateProvider, msNavigationServiceProvider, authProvider) {
+
         // State
+
         $stateProvider.state('app.dashboard', {
             url: '/dashboard',
             views: {
                 'content@app': {
-                    templateUrl: 'app/main/dashboard/dashboard.html',
+                    templateUrl: 'app/main/dashboard/dashboard.' + authProvider.$get().role + '.html',
                     controller: 'DashboardController as vm'
                 }
             },
+            resolve : {
+
+            },
             bodyClass: 'dashboard-project'
         });
+
 
         //add to the navigation bar
         msNavigationServiceProvider.saveItem('apps', {

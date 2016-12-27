@@ -9,6 +9,7 @@
     /** @ngInject */
     function config($translateProvider, $httpProvider) {
         // Put your common app configurations here
+        $httpProvider.defaults.withCredentials = true;
         $httpProvider.interceptors.push('authInterceptor');
 
         // angular-translate configuration

@@ -17,6 +17,9 @@
 
             // Quick Panel
             //'app.quick-panel',
+            //repository
+            'app.repository',
+
             //auth service
             'app.authService',
             //login

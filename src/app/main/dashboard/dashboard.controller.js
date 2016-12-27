@@ -6,15 +6,25 @@
         .controller('DashboardController', DashboardController);
 
     /** @ngInject */
-    function DashboardController(auth) {
+    function DashboardController(auth, Employee) {
         var vm = this;
 
-        var currentUser = auth.currentUser();
+        Employee.getReferred().$promise.then(function (referreds) {
+            console.log(referreds);
+            vm.refferedCount = referreds.length;
+        });
 
-        vm.firstname = currentUser.firstname;
-        vm.lastname = currentUser.lastname;
+        Employee.getRewardPoints().$promise.then(function (value) {
+            vm.rewards = value.points;
+        });
 
-        console.log("from dash ctrl", auth.currentUser());
+        auth.getCurrentUser(function (currentUser) {
+
+            vm.firstname = currentUser.firstname;
+            vm.lastname = currentUser.lastname;
+
+        });
+
 
     }
 

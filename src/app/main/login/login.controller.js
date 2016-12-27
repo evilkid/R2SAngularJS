@@ -24,8 +24,10 @@
             auth.login(vm.form.username, vm.form.password).then(
                 function handleSuccess(response) {
                     console.log("Success", response);
-
-                    $state.go("app.sample");
+                    //if the use is active, redirect to dashboard, else show a message
+                    response.data.active ?
+                        $state.go("app.dashboard") :
+                        vm.message = "This user is disabled!";
                 },
                 function handleError(response) {
                     if (response.status == 404) {
