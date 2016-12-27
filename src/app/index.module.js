@@ -16,11 +16,13 @@
             'app.toolbar',
 
             // Quick Panel
-            'app.quick-panel',
+            //'app.quick-panel',
             //auth service
             'app.authService',
             //login
             'app.login',
+            //dashboard
+            'app.dashboard',
             // Sample
             'app.sample'
         ]);

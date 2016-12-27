@@ -28,7 +28,7 @@
                                      class="icon status s16">
                             </md-icon>
                         </div>
-                        <span class="username" hide show-gt-sm>John Doe</span>
+                        <span class="username" hide show-gt-sm>{{vm.fullName}}</span>
                         <md-icon md-font-icon="icon-chevron-down"
                                  class="icon s16" hide-xs></md-icon>
                     </div>
@@ -104,11 +104,5 @@
             </md-menu-content>
         </md-menu>
 
-        <div class="toolbar-separator"></div>
-
-        <md-button id="quick-panel-toggle" class="md-icon-button" ng-click="vm.toggleSidenav('quick-panel')"
-                   aria-label="Toggle quick panel" translate translate-attr-aria-label="TOOLBAR.TOGGLE_QUICK_PANEL">
-            <md-icon md-font-icon="icon-format-list-bulleted" class="icon"></md-icon>
-        </md-button>
     </div>
 </div>

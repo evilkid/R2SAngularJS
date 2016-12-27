@@ -6,7 +6,7 @@
         .controller('LoginController', LoginController);
 
     /** @ngInject */
-    function LoginController(auth) {
+    function LoginController(auth, $state) {
 
         var vm = this;
         // Data
@@ -24,6 +24,8 @@
             auth.login(vm.form.username, vm.form.password).then(
                 function handleSuccess(response) {
                     console.log("Success", response);
+
+                    $state.go("app.sample");
                 },
                 function handleError(response) {
                     if (response.status == 404) {

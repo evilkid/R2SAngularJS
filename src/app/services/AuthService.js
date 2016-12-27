@@ -13,7 +13,16 @@
         this.login = login;
         this.logout = logout;
         this.isAuthorized = isAuthorized;
+        this.currentUser = currentUser;
         ///////
+
+        function currentUser() {
+            if (isAuthorized()) {
+                var token = $cookies.get("access_token");
+                return decodeToken(token);
+            }
+            return null;
+        }
 
         function isAuthorized() {
             if ($cookies.get("access_token")) {
@@ -30,7 +39,7 @@
         }
 
         function logout() {
-
+            $cookies.remove("access_token");
         }
 
         function urlBase64Decode(str) {
@@ -52,7 +61,7 @@
                 }
             }
             return $window.decodeURIComponent(escape($window.atob(output)));
-        };
+        }
 
 
         function decodeToken(token) {
@@ -68,7 +77,7 @@
             }
 
             return angular.fromJson(decoded);
-        };
+        }
 
         function getTokenExpirationDate(token) {
             var decoded = decodeToken(token);
@@ -81,7 +90,7 @@
             d.setUTCSeconds(decoded.exp);
 
             return d;
-        };
+        }
 
         function isTokenExpired(token, offsetSeconds) {
             var d = getTokenExpirationDate(token);
@@ -92,7 +101,7 @@
 
             // Token expired?
             return !(d.valueOf() > (new Date().valueOf() + (offsetSeconds * 1000)));
-        };
+        }
     }
 
 })(angular);

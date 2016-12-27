@@ -22,7 +22,7 @@
     /** @ngInject */
     function authInterceptor($injector) {
         return {
-            // automatically attach Authorization header
+            // Authorization Checker
             request: function (config) {
                 var stateService = $injector.get('$state');
                 var authService = $injector.get('auth');
