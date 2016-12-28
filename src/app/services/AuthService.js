@@ -25,9 +25,10 @@
         function getRole() {
             if (isAuthorized()) {
                 var token = $cookies.get("access_token");
+                console.log(decodeToken(token));
                 return decodeToken(token).role;
             }
-            return null;
+            return "Employee";
         }
 
 

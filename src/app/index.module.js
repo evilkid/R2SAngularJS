@@ -26,6 +26,8 @@
             'app.login',
             //dashboard
             'app.dashboard',
+            //job
+            'app.job',
             // Sample
             'app.sample'
         ]);

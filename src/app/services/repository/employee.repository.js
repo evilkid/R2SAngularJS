@@ -23,9 +23,16 @@
                 params: {
                     cin: "rewards"
                 }
+            },
+            'shareByEmail': {
+                isArray: false,
+                method: "GET",
+                params: {
+                    cin: "refer"
+                }
             }
         };
-        var Employee = $resource(API + "/employee/:cin", params, customMethods);
+        var Employee = $resource(API + "/employee/:cin/:hash/:email", params, customMethods);
         return Employee;
     }
 
