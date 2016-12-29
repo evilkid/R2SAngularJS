@@ -6,8 +6,10 @@
         .controller('DashboardController', DashboardController);
 
     /** @ngInject */
-    function DashboardController(auth, Employee) {
+    function DashboardController(auth, Employee, $state) {
         var vm = this;
+
+        vm.gotoReferee = gotoReferee;
 
         Employee.getReferred().$promise.then(function (referreds) {
             console.log(referreds);
@@ -26,6 +28,9 @@
         });
 
 
+        function gotoReferee(){
+            $state.go("app.referee");
+        }
     }
 
 })();

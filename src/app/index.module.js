@@ -28,6 +28,8 @@
             'app.dashboard',
             //job
             'app.job',
+            //referee
+            'app.referee',
             // Sample
             'app.sample'
         ]);
