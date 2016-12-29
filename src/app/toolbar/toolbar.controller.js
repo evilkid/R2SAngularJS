@@ -6,8 +6,32 @@
         .controller('ToolbarController', ToolbarController);
 
     /** @ngInject */
-    function ToolbarController(auth, $rootScope, $q, $state, $timeout, $mdSidenav, $translate, $mdToast, msNavigationService) {
+    function ToolbarController(auth, $rootScope, $q, $state, $timeout, $mdSidenav, $translate, $mdToast, msNavigationService, $interval, Notification) {
         var vm = this;
+
+        $interval(function () {
+            Notification.query().$promise.then(function (notifications) {
+                if (notifications.length > vm.notifications.length) {
+                    $mdToast.show({
+                        template: '<md-toast layout="column" layout-align="center start">' +
+                        '<div class="md-toast-content">New Notification from &nbsp;' +
+                        ' <b> ' + notifications[notifications.length - 1].recruitmentManager.firstname + '&nbsp;' +
+                        notifications[notifications.length - 1].recruitmentManager.lastname + '</b>: &nbsp;' +
+                        notifications[notifications.length - 1].message +
+                        '</div></md-toast>',
+                        hideDelay: 5000,
+                        position: 'bottom right'
+                    });
+
+                }
+
+                vm.notifications = notifications;
+
+            });
+            console.log(vm.notifications);
+        }, 5000);
+
+        vm.notifications = Notification.query();
 
         // Data
         $rootScope.global = {
@@ -72,7 +96,7 @@
         vm.toggleMsNavigationFolded = toggleMsNavigationFolded;
         vm.search = search;
         vm.searchResultClick = searchResultClick;
-
+        vm.gotoJob = gotoJob;
         //////////
 
         init();
@@ -221,6 +245,10 @@
                     $state.go(item.state);
                 }
             }
+        }
+
+        function gotoJob(jobId) {
+            $state.go('app.job.detail', {id: jobId});
         }
     }
 

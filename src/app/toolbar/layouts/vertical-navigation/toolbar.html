@@ -12,7 +12,8 @@
     </div>
 
     <div layout="row" layout-align="start center">
-        <md-progress-circular id="toolbar-progress" ng-disabled="!$root.loadingProgress"  class="md-accent" md-diameter="32">
+        <md-progress-circular id="toolbar-progress" ng-disabled="!$root.loadingProgress" class="md-accent"
+                              md-diameter="32">
         </md-progress-circular>
 
         <md-menu-bar id="user-menu">
@@ -78,7 +79,8 @@
 
         <div class="toolbar-separator"></div>
 
-        <ms-search-bar on-search="vm.search(query)" on-result-click="vm.searchResultClick(item)" debounce="300"></ms-search-bar>
+        <ms-search-bar on-search="vm.search(query)" on-result-click="vm.searchResultClick(item)"
+                       debounce="300"></ms-search-bar>
 
         <div class="toolbar-separator"></div>
 
@@ -98,6 +100,35 @@
                         <span layout="row" layout-align="start center">
                             <img class="flag" ng-src="assets/images/flags/{{lang.flag}}.png">
                             <span translate="{{lang.translation}}">{{lang.title}}</span>
+                        </span>
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+
+        <div class="toolbar-separator"></div>
+
+
+        <md-menu id="notification-menu" md-offset="0 72" md-position-mode="target-right target">
+            <md-button class="language-button" ng-click="$mdOpenMenu()"
+                       aria-label="Language" md-menu-origin md-menu-align-target>
+                <div layout="row" layout-align="center center">
+                    <md-icon md-font-icon="icon-hangouts"
+                             class="icon s24 ng-scope md-default-theme md-font material-icons icon-hangouts"
+                             aria-hidden="true">
+                    </md-icon>
+                    <span class="badge white-fg" style="background: red;">{{vm.notifications.length}}</span>
+                </div>
+            </md-button>
+
+            <md-menu-content width="3" id="language-menu-content">
+                <md-menu-item ng-repeat="notification in vm.notifications">
+                    <md-button ng-click="vm.gotoJob(notification.job.id)">
+                        <span layout="row" layout-align="start center">
+                            <span>{{notification.date | date}}&nbsp;</span>
+                            <span><b>RM:</b> {{notification.recruitmentManager.lastname}} {{notification.recruitmentManager.firstname}}&nbsp;</span>
+                            <span><b>Job:</b> {{notification.job.name}} &nbsp;</span>
+                            <span><b>Message:</b> {{notification.message}}</span>
                         </span>
                     </md-button>
                 </md-menu-item>
