@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.dashboard', [])
+        .module('app.dashboard', ['ui.calendar'])
         .config(config);
 
     /** @ngInject */
@@ -18,9 +18,7 @@
                     controller: 'DashboardController as vm'
                 }
             },
-            resolve : {
-
-            },
+            resolve: {},
             bodyClass: 'dashboard-project'
         });
 

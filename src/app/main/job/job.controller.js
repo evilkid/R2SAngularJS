@@ -29,7 +29,6 @@
 
         auth.getCurrentUser(function (currentUser) {
             vm.cin = currentUser.cin;
-            console.log("cin", vm.cin);
         });
 
         vm.jobs = Jobs;

@@ -25,7 +25,6 @@
         function getRole() {
             if (isAuthorized()) {
                 var token = $cookies.get("access_token");
-                console.log(decodeToken(token));
                 return decodeToken(token).role;
             }
             return "Employee";
@@ -38,10 +37,8 @@
 
                 if (self.currentUser && self.currentUser.cin) {
 
-                    console.log("old", callback);
                     callback(self.currentUser);
                 } else {
-                    console.log("new", callback);
                     var token = $cookies.get("access_token");
                     var cin = decodeToken(token).cin;
                     self.currentUser = User.get({cin: cin}).$promise.then(function (currentUser) {

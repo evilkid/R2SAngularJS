@@ -9,7 +9,6 @@
 
         vm.referees = Referees;
         vm.referees.forEach(function (referee) {
-            console.log("job", Candidate.getJobs({cin: referee.cin}));
             referee.job = Candidate.getJobs({cin: referee.cin});
         });
 

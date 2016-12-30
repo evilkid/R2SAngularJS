@@ -8,12 +8,28 @@
     /** @ngInject */
     function DashboardController(auth, Employee, Candidate, $state) {
         var vm = this;
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
+
+        vm.events = [];
+
+        vm.calendarUiConfig = {
+            calendar: {
+                eventRender: function (event, element) {
+                    console.log("event", event);
+                    element.html("Job: <b>" + event.interview.job.name + "</b><br/>Interviewer: <b>" +
+                        event.interview.recruitmentManager.firstname + " " + event.interview.recruitmentManager.lastname + "</b>");
+                    console.log(element);
+                }
+            }
+        };
 
         vm.gotoReferee = gotoReferee;
         vm.gotoJobDetail = gotoJobDetail;
 
         Employee.getReferred().$promise.then(function (referreds) {
-            console.log(referreds);
             vm.refferedCount = referreds.length;
         });
 
@@ -26,7 +42,8 @@
             vm.lastname = currentUser.lastname;
 
             if (currentUser.role == "Candidate") {
-                vm.jobs = Candidate.getJobs({cin: currentUser.cin});
+                loadCandidateInfo(currentUser.cin);
+
             }
         });
 
@@ -37,6 +54,31 @@
 
         function gotoJobDetail(id) {
             $state.go('app.job.detail', {id: id});
+        }
+
+        function loadCandidateInfo(cin) {
+            vm.jobs = Candidate.getJobs({cin: cin});
+            Candidate.getInterviews({cin: cin}).$promise.then(function (interviews) {
+
+                var events = [];
+                interviews.forEach(function (interview) {
+                    console.log(interview);
+                    var date = new Date();
+                    var d = date.getDate();
+                    var m = date.getMonth();
+                    var y = date.getFullYear();
+                    events.push({
+                        id: interview.id,
+                        title: "Job: " + interview.job.name + ", Interviewer: " +
+                        interview.recruitmentManager.firstname + " " + interview.recruitmentManager.lastname,
+                        interview: interview,
+                        start: interview.date,
+                        end: null
+                    });
+                });
+                vm.events.push(events);
+                //angular.element('#calendarView').fullCalendar('refetchEvents');
+            });
         }
     }
 
