@@ -6,10 +6,11 @@
         .controller('DashboardController', DashboardController);
 
     /** @ngInject */
-    function DashboardController(auth, Employee, $state) {
+    function DashboardController(auth, Employee, Candidate, $state) {
         var vm = this;
 
         vm.gotoReferee = gotoReferee;
+        vm.gotoJobDetail = gotoJobDetail;
 
         Employee.getReferred().$promise.then(function (referreds) {
             console.log(referreds);
@@ -21,15 +22,21 @@
         });
 
         auth.getCurrentUser(function (currentUser) {
-
             vm.firstname = currentUser.firstname;
             vm.lastname = currentUser.lastname;
 
+            if (currentUser.role == "Candidate") {
+                vm.jobs = Candidate.getJobs({cin: currentUser.cin});
+            }
         });
 
 
-        function gotoReferee(){
+        function gotoReferee() {
             $state.go("app.referee");
+        }
+
+        function gotoJobDetail(id) {
+            $state.go('app.job.detail', {id: id});
         }
     }
 

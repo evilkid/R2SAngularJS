@@ -10,7 +10,7 @@
         .config(config);
 
     /** @ngInject */
-    function config($stateProvider, msNavigationServiceProvider, $translatePartialLoaderProvider) {
+    function config($stateProvider, msNavigationServiceProvider, $translatePartialLoaderProvider, authProvider) {
 
         // State
 
@@ -59,7 +59,10 @@
             /*stateParams: {
              'param1': 'page'
              },*/
-            weight: 1
+            weight: 1,
+            hidden: function () {
+                return authProvider.$get().role != "Employee";
+            }
         });
     }
 
