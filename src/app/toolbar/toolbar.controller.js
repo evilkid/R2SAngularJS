@@ -6,34 +6,15 @@
         .controller('ToolbarController', ToolbarController);
 
     /** @ngInject */
-    function ToolbarController(auth, $rootScope, $q, $state, $timeout, $mdSidenav, $translate, $mdToast, msNavigationService, $interval, Notification) {
+    function ToolbarController(auth, $rootScope, $q, $state, $timeout, $mdSidenav, $translate, $mdToast, msNavigationService, $interval, Notification, Candidate) {
         var vm = this;
 
-        $interval(function () {
-            Notification.query().$promise.then(function (notifications) {
-                if (notifications.length > vm.notifications.length) {
-                    $mdToast.show({
-                        template: '<md-toast layout="column" layout-align="center start">' +
-                        '<div class="md-toast-content">New Notification from &nbsp;' +
-                        ' <b> ' + notifications[notifications.length - 1].recruitmentManager.firstname + '&nbsp;' +
-                        notifications[notifications.length - 1].recruitmentManager.lastname + '</b>: &nbsp;' +
-                        notifications[notifications.length - 1].message +
-                        '</div></md-toast>',
-                        hideDelay: 5000,
-                        position: 'bottom right'
-                    });
+        vm.notifications = [];
 
-                }
-
-                vm.notifications = notifications;
-
-            });
-            console.log(vm.notifications);
-        }, 5000);
-
-        vm.notifications = Notification.query();
-
+        //setupNotificationListener();
+        //setupInterviewListener();
         // Data
+
         $rootScope.global = {
             search: ''
         };
@@ -41,6 +22,14 @@
 
         auth.getCurrentUser(function (currentUser) {
             vm.fullName = currentUser.firstname + " " + currentUser.lastname;
+            vm.role = currentUser.role;
+
+            console.log("role", vm.role);
+            if (vm.role == "Employee") {
+                setupNotificationListener();
+            } else if (vm.role == "Candidate") {
+                setupInterviewListener(currentUser.cin);
+            }
         });
 
 
@@ -249,6 +238,60 @@
 
         function gotoJob(jobId) {
             $state.go('app.job.detail', {id: jobId});
+        }
+
+        function setupNotificationListener() {
+            alert("called");
+            vm.notifications = Notification.query();
+
+            $interval(function () {
+                Notification.query().$promise.then(function (notifications) {
+                    if (notifications.length > vm.notifications.length) {
+                        $mdToast.show({
+                            template: '<md-toast layout="column" layout-align="center start">' +
+                            '<div class="md-toast-content">New Notification from &nbsp;' +
+                            ' <b> ' + notifications[notifications.length - 1].recruitmentManager.firstname + '&nbsp;' +
+                            notifications[notifications.length - 1].recruitmentManager.lastname + '</b>: &nbsp;' +
+                            notifications[notifications.length - 1].message +
+                            '</div></md-toast>',
+                            hideDelay: 5000,
+                            position: 'bottom right'
+                        });
+
+                        vm.notifications = notifications;
+                    }
+
+
+                });
+                console.log(vm.notifications);
+            }, 5000);
+        }
+
+        function setupInterviewListener(cin) {
+            vm.notifications = Candidate.getInterviews({cin: cin});
+
+            $interval(function () {
+                Candidate.getInterviews({cin: cin}).$promise.then(function (notifications) {
+                    console.log("NEW INTERVIEW", notifications);
+                    if (notifications.length > vm.notifications.length) {
+                        $mdToast.show({
+                            template: '<md-toast layout="column" layout-align="center start">' +
+                            '<div class="md-toast-content">You\'ve got an interview with&nbsp;' +
+                            ' <b> ' + notifications[notifications.length - 1].recruitmentManager.firstname + '&nbsp;' +
+                            notifications[notifications.length - 1].recruitmentManager.lastname + '</b>: &nbsp;' +
+                            'Job:&nbsp;<b>' + notifications[notifications.length - 1].job.name + '</b>' +
+                            '</div></md-toast>',
+                            hideDelay: 5000,
+                            position: 'bottom right'
+                        });
+
+                        vm.notifications = notifications;
+                    }
+
+
+                });
+                console.log(vm.notifications);
+            }, 5000);
         }
     }
 

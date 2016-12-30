@@ -8,15 +8,16 @@
     /** @ngInject */
     function DashboardController(auth, Employee, Candidate, $state) {
         var vm = this;
-        var date = new Date();
-        var d = date.getDate();
-        var m = date.getMonth();
-        var y = date.getFullYear();
 
         vm.events = [];
 
         vm.calendarUiConfig = {
             calendar: {
+                header: {
+                    left: 'month agendaWeek agendaDay',
+                    center: 'title',
+                    right: 'today prev,next'
+                },
                 eventRender: function (event, element) {
                     console.log("event", event);
                     element.html("Job: <b>" + event.interview.job.name + "</b><br/>Interviewer: <b>" +

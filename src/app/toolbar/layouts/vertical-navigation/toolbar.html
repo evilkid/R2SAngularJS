@@ -123,12 +123,22 @@
 
             <md-menu-content width="3" id="language-menu-content">
                 <md-menu-item ng-repeat="notification in vm.notifications">
-                    <md-button ng-click="vm.gotoJob(notification.job.id)">
+                    <!-- if employee show notifications -->
+                    <md-button ng-click="vm.gotoJob(notification.job.id)" ng-if="vm.role=='Employee'">
                         <span layout="row" layout-align="start center">
                             <span>{{notification.date | date}}&nbsp;</span>
                             <span><b>RM:</b> {{notification.recruitmentManager.lastname}} {{notification.recruitmentManager.firstname}}&nbsp;</span>
                             <span><b>Job:</b> {{notification.job.name}} &nbsp;</span>
                             <span><b>Message:</b> {{notification.message}}</span>
+                        </span>
+                    </md-button>
+
+                    <!-- if employee show interviews -->
+                    <md-button ng-if="vm.role=='Candidate'">
+                        <span layout="row" layout-align="start center">
+                            <span>{{notification.date | date}}&nbsp;</span>
+                            <span><b>RM:</b> {{notification.recruitmentManager.lastname}} {{notification.recruitmentManager.firstname}}&nbsp;</span>
+                            <span><b>Job:</b> {{notification.job.name}} &nbsp;</span>
                         </span>
                     </md-button>
                 </md-menu-item>
