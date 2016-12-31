@@ -33,6 +33,7 @@
             // certification
             'app.certification',
             //experience
-            'app.experience'
+            'app.experience',
+            'app.skill'
         ]);
 })();
