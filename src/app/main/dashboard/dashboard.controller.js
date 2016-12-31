@@ -14,7 +14,7 @@
         vm.calendarUiConfig = {
             calendar: {
                 header: {
-                    left: 'month agendaWeek agendaDay',
+                    left: 'month agendaMonth agendaWeek agendaDay',
                     center: 'title',
                     right: 'today prev,next'
                 },

@@ -241,7 +241,6 @@
         }
 
         function setupNotificationListener() {
-            alert("called");
             vm.notifications = Notification.query();
 
             $interval(function () {

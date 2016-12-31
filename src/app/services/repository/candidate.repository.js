@@ -20,6 +20,13 @@
                 params: {
                     entity: "interviews"
                 }
+            },
+            'getCertifications': {
+                method: "GET",
+                isArray: true,
+                params: {
+                    entity: "certifications"
+                }
             }
         };
         var Candidate = $resource(API + "/candidate/:cin/:entity", params, customMethods);

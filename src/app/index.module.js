@@ -30,7 +30,7 @@
             'app.job',
             //referee
             'app.referee',
-            // Sample
-            'app.sample'
+            // certification
+            'app.certification'
         ]);
 })();
