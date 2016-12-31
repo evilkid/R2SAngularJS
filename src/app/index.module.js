@@ -31,6 +31,8 @@
             //referee
             'app.referee',
             // certification
-            'app.certification'
+            'app.certification',
+            //experience
+            'app.experience'
         ]);
 })();

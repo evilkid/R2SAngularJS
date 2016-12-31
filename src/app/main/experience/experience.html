@@ -1,4 +1,4 @@
-<div id="certification" class="page-layout simple right-sidenav" layout="row">
+<div id="experience" class="page-layout simple right-sidenav" layout="row">
 
     <!-- CENTER -->
     <div class="center" flex ms-scroll>
@@ -25,13 +25,13 @@
 
             <md-tabs md-dynamic-height>
 
-                <md-tab label="Certifications">
+                <md-tab label="Experience">
 
                     <!-- WIDGET GROUP -->
                     <div class="widget-group" layout="row" flex="100" layout-wrap>
 
                         <ms-widget flippable="true" layout="column" flex="100" flex-gt-xs="100" flex-gt-md="25"
-                                   ng-repeat="certification in vm.certifications">
+                                   ng-repeat="experience in vm.experiences">
 
                             <!-- Front -->
                             <ms-widget-front class="white-bg">
@@ -45,13 +45,13 @@
 
                                         <md-menu-content width="3">
                                             <md-menu-item>
-                                                <md-button ng-click="vm.showEditDialog(certification)"
+                                                <md-button ng-click="vm.showEditDialog(experience)"
                                                            aria-label="Refresh widget">
                                                     Edit
                                                 </md-button>
                                             </md-menu-item>
                                             <md-menu-item>
-                                                <md-button ng-click="vm.deleteCertification(certification, $index)"
+                                                <md-button ng-click="vm.deleteExperience(experience, $index)"
                                                            aria-label="Refresh widget">
                                                     Delete
                                                 </md-button>
@@ -62,25 +62,36 @@
 
                                 <div class="pb-10" layout="column" layout-align="center center">
                                     <div class="red-fg font-size-20 ">
-                                        {{certification.name}}
+                                        {{experience.jobTitle}}
                                     </div>
 
 
-                                    <div class="h3 secondary-text font-weight-500 pt-10">Certification eligible</div>
+                                    <div class="h3 secondary-text font-weight-500 pt-10">Time period</div>
                                     <div layout-align="space-between center" layout="row">
                                         <div class="h3 black-text font-weight-500 pr-20">From:
-                                            {{certification.dateStart | date}}
+                                            {{experience.dateStart | date}}
                                         </div>
                                         <div class="h3 black-text font-weight-500">To:
-                                            {{ (certification.dateEnd | date) || "Never"}}
+                                            {{ (experience.dateEnd | date) || "Present"}}
                                         </div>
                                     </div>
+                                    <div class="h3 secondary-text font-weight-500 pt-10">
+                                        Job Title:
+                                        <b class="black-text">{{experience.jobTitle}}</b>
+                                    </div>
+                                    <div class="h3 secondary-text font-weight-500 pt-10">
+                                        Organization:
+                                        <b class="black-text">{{experience.organization}}</b>
+                                    </div>
+                                    <div class="h3 black-text font-weight-500 pr-20">
 
-                                    <div class="h3 secondary-text font-weight-500"></div>
+                                    </div>
+                                    <div class="h3 secondary-text font-weight-500">Description:</div>
+                                    <div class="h3 black-text font-weight-500">{{experience.description}}</div>
 
-                                    <md-button ng-if="certification.url" class="md-raised reference-button"
+                                    <md-button ng-if="experience.url" class="md-raised reference-button"
                                                style="margin-left: 250px"
-                                               href="http://{{certification.url}}"
+                                               href="http://{{experience.url}}"
                                                target="_blank">
                                         <md-icon md-font-icon="icon-link"></md-icon>
                                         <span>Link</span>

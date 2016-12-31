@@ -21,6 +21,13 @@
                     entity: "interviews"
                 }
             },
+            'getExperiences': {
+                method: "GET",
+                isArray: true,
+                params: {
+                    entity: "experiences"
+                }
+            },
             'getCertifications': {
                 method: "GET",
                 isArray: true,

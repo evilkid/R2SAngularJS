@@ -78,7 +78,6 @@
         }
 
         function deleteCertification(certification, index) {
-            alert(index);
             var confirm = $mdDialog.confirm()
                 .title('Would you like to delete the "' + certification.name + '" certification?')
                 .ok('Yes')
@@ -131,7 +130,7 @@
 
         function saveCertificate() {
             if (dialogData.type == "Add") {
-                vm.certifications.push(vm.newCertification);
+                //vm.certifications.push(vm.newCertification);
                 vm.newCertification.candidate = {cin: dialogData.cin, role: "Candidate"};
                 Certification.save(vm.newCertification);
             } else if (dialogData.type == "Edit") {
