@@ -6,7 +6,7 @@
         .controller('LoginController', LoginController);
 
     /** @ngInject */
-    function LoginController(auth, $state) {
+    function LoginController(auth, $state, msNavigationService, $rootScope) {
 
         var vm = this;
         // Data
@@ -25,9 +25,26 @@
                 function handleSuccess(response) {
                     console.log("Success", response);
                     //if the use is active, redirect to dashboard, else show a message
-                    response.data.active ?
-                        $state.go("app.dashboard") :
+                    if (response.data.active) {
+                        console.log("Role", response.data.role);
+
+                        msNavigationService.saveItem('apps', {
+                            title: 'Dashboard',
+                            icon: 'icon-tile-four',
+                            state: 'app.dashboard',
+                            stateParams: {
+                                'role': response.data.role
+                            },
+                            weight: 0
+                        });
+
+                        $rootScope.$broadcast('loggedin', { role: response.data.role });
+
+                        $state.go("app.dashboard", {"role": response.data.role});
+
+                    } else {
                         vm.message = "This user is disabled!";
+                    }
                 },
                 function handleError(response) {
                     if (response.status == 404) {

@@ -18,16 +18,23 @@
         self.refresh = refresh;
         self.getCurrentUser = getCurrentUser;
         self.role = getRole();
+        self.getRole = getRole;
 
         self.currentUser = null;
         ///////
 
         function getRole() {
+
+            if (self.currentUser && self.currentUser.role) {
+                return self.currentUser.role;
+            }
+
             if (isAuthorized()) {
                 var token = $cookies.get("access_token");
-                return decodeToken(token).role;
+                if (token) {
+                    return decodeToken(token).role;
+                }
             }
-            return "Employee";
         }
 
 
@@ -89,12 +96,17 @@
             return $http.get(API + '/login/' + username + "/" + password, {withCredentials: true})
                 .then(function (response) {
                     self.currentUser = response.data;
+                    self.role = self.currentUser.role;
+                    console.log("from login", self.currentUser);
                     return response;
                 });
         }
 
         function logout() {
             $cookies.remove("access_token");
+            self.currentUser = null;
+            self.role = "";
+
         }
 
         function urlBase64Decode(str) {
