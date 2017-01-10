@@ -107,7 +107,7 @@
 
             Job.generateReferLink({id: jobId, employeeid: vm.cin}).$promise.then(function (response) {
                 var hash = response.hash;
-                var referUrl = $location.host() + ":" + $location.port() + "/refer?hash=" + hash;
+                var referUrl = $location.host() + ":" + $location.port() + "/register?hash=" + hash;
 
                 var confirm = $mdDialog.prompt()
                     .title("Would you like to share this job?")
