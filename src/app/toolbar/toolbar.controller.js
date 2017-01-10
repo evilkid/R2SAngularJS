@@ -25,11 +25,11 @@
             vm.role = currentUser.role;
 
             console.log("role", vm.role);
-            // if (vm.role == "Employee") {
-            //     setupNotificationListener();
-            // } else if (vm.role == "Candidate") {
-            //     setupInterviewListener(currentUser.cin);
-            // }
+            if (vm.role == "Employee") {
+                setupNotificationListener();
+            } else if (vm.role == "Candidate") {
+                setupInterviewListener(currentUser.cin);
+            }
         });
 
 
@@ -253,7 +253,7 @@
                             notifications[notifications.length - 1].recruitmentManager.lastname + '</b>: &nbsp;' +
                             notifications[notifications.length - 1].message +
                             '</div></md-toast>',
-                            hideDelay: 5000,
+                            hideDelay: 1000,
                             position: 'bottom right'
                         });
 

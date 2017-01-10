@@ -54,6 +54,15 @@
                 params: {
                     entity: "skills"
                 }
+            },
+            'getHashInfo': {
+                method: "GET"
+            },
+            'register': {
+                method: "POST",
+                params: {
+                    cin: "register"
+                }
             }
         };
         var Candidate = $resource(API + "/candidate/:cin/:entity/:skillId", params, customMethods);

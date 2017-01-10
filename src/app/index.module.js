@@ -24,6 +24,8 @@
             'app.authService',
             //login
             'app.login',
+            //register
+            'app.register',
             //dashboard
             'app.dashboard',
             //job

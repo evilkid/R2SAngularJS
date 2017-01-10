@@ -35,7 +35,7 @@
         });
 
         Employee.getRewardPoints().$promise.then(function (value) {
-            vm.rewards = value.points;
+            vm.rewards = value.points || 0;
         });
 
         auth.getCurrentUser(function (currentUser) {
